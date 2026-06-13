@@ -97,8 +97,11 @@ messageInput.addEventListener('input', () => {
   updateSendButton();
 });
 
+// Touch device detection
+const isTouchDevice = ('ontouchstart' in window) || window.matchMedia('(pointer: coarse)').matches;
+
 messageInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && !e.shiftKey) {
+  if (e.key === 'Enter' && !e.shiftKey && !isTouchDevice) {
     e.preventDefault();
     if ((messageInput.value.trim() || state.attachedFile) && !state.isLoading) {
       sendMessage();
@@ -551,9 +554,9 @@ function editMessage(msgIndex) {
     resendFromIndex(msgIndex, newText);
   });
 
-  // Enter to send (Shift+Enter for newline)
+  // Enter to send (PC only: Shift+Enter for newline, Enter for send)
   textarea.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey && !isTouchDevice) {
       e.preventDefault();
       const newText = textarea.value.trim();
       if (!newText) return;
