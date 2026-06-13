@@ -638,11 +638,13 @@ html, body {
   transform: scale(0.95);
 }
 
-/* Touch: always visible on small screens */
-@media (hover: none) {
+/* Touch devices: always show edit button */
+@media (pointer: coarse), (hover: none) {
   .msg-edit-btn {
-    opacity: 0.7;
+    opacity: 1;
     pointer-events: auto;
+    width: 36px;
+    height: 36px;
   }
 }
 
